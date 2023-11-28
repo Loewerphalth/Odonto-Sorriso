@@ -1,6 +1,6 @@
-# Colocar Loop na tela de login
-# Colocar em nome em espefico caracateres de letras
-# email colocar com @gmail.com
+# Colocar Loop na tela de login #
+# Colocar em nome em especifico caracteres de letras
+# email colocar com @gmail.com #
 # Adicionar lista de planos para usuário (Array de 10 números)
 import os
 import sys
@@ -11,7 +11,17 @@ def pausar_execucao():
 
 def validar_email(email):
     # Verifica se o e-mail contém pelo menos um "@" (símbolo típico em um e-mail)
-    return "@" in email
+    if "@" not in email:
+        return False
+
+    # Divide o e-mail em nome de usuário e domínio
+    nome_usuario, dominio = email.split("@")
+
+    # Verifica se o domínio tem pelo menos 3 caracteres e após o "@" existe pelo menos 1 caractere
+    return len(dominio) >= 3 and len(nome_usuario) >= 3
+# Exemplo de uso:
+email_valido = validar_email("usuario@dominio.com")
+print(email_valido)  # Isso imprimirá True se o e-mail for válido, False caso contrário
 
 def validar_telefone(telefone):
     # Verifica se o número de telefone tem o formato de DDD com dois dígitos
@@ -60,7 +70,7 @@ def Cadastro():
         if validar_email(email):
             break
         else:
-            print("E-mail inválido. Certifique-se de incluir o símbolo '@'.")
+            print("E-mail inválido. Certifique-se de incluir um endereço de email válido.")
 
     # Solicitar o número de telefone até que seja fornecido um válido
     while True:
@@ -88,6 +98,8 @@ def Cadastro():
         file.write(f"{telefone}\n")
         file.write(f"{plano}\n")
 
+        print("\n Usuário cadastrado com sucesso ! \n")
+
     pausar_execucao()
 
 def Consulta():
@@ -95,7 +107,7 @@ def Consulta():
 
     try:
         with open(CPF, "r") as file:
-            print("\nDados do usuário:\n")
+            print("\nEsses são os dados do usuário:\n")
             for linha in file:
                 print(linha.strip())  # Remove espaços em branco no início e no final da linha
     except FileNotFoundError:
